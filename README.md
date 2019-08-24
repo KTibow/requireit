@@ -1,2 +1,2 @@
 # requireit
-A simple library to make sure you have all of your libraries.
+A simple bit of code to make sure you have all of your libraries.
