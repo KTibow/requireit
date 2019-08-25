@@ -17,7 +17,7 @@ def makeSure(libname):
 			pipit("install "+libname)
 			importlib.import_module(libname)
 		except Exception as f:
-	return f
+			return f
 # imports string
 def importIt(libname):
 	try:
@@ -47,5 +47,3 @@ def requireExists(libs, verbose):
 			print("Auto installation failed for "+lib)
 		elif verbose:
 			print("Auto installation succeded for "+lib)
-    
-
