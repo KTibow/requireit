@@ -20,26 +20,31 @@ def makeSure(libname):
       return f
 # imports string
 def importIt(libname):
-  try:
+	try:
 		import importlib
 	except ImportError:
 		raise VersionError("Please upgrade your Python interpreter.")
 	globals()[libname] = importlib.import_module(libname)
 # the thing you probably want
 def makeSureAndImport(libname):
-  f = makeSure(libname)
-  importIt(libname)
-  return f
+	f = makeSure(libname)
+	importIt(libname)
+	return f
 # the thing you really want
 def requireit(libs, verbose):
-  for lib in libs:
-    f = makeSureAndImport(lib)
-    if verbose and f is not None:
-      print("Auto installation failed for "+lib)
+	for lib in libs:
+		f = makeSureAndImport(lib)
+		if verbose and f is not None:
+			print("Auto installation failed for "+lib)
+		elif verbose:
+			print("Auto installation succeded for "+lib)
+		
 # the thing you might want
 def requireExists(libs, verbose):
-  for lib in libs:
-    f = makeSure(lib)
-    if verbose and f is not None:
-      print("Auto installation failed for "+lib)
+	for lib in libs:
+		f = makeSure(lib)
+		if verbose and f is not None:
+			print("Auto installation failed for "+lib)
+		elif verbose:
+			print("Auto installation succeded for "+lib)
     
