@@ -52,8 +52,6 @@ def requireExists(libs, verbose):
 			print("Auto installation failed for "+lib)
 		elif verbose:
 			print("Auto installation succeded for "+lib)
-    
-
-
+# your code here!
 ```
 See requireitexamples.py for more examples.
