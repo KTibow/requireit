@@ -14,4 +14,8 @@ print("making sure asyncio is installed, and then importing it")
 # it says it all
 makeSureAndImport("asyncio")
 print("making sure aiohttp and asyncio is installed")
-requireExists(["aiohttp", "asyncio"])
+# it says it all, but the second parameter is verbose or not
+requireExists(["aiohttp", "asyncio"], True)
+print("making sure aiohttp and asyncio is imported")
+# the signature move! (the second parameter is verbose or not)
+requireit(["aiohttp", "asyncio"], True)
