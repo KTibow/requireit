@@ -1,3 +1,5 @@
+#This is requireit, a way to simplify user experience by automatically installing libraries.
+#Find out about it at https://github.com/KTibow/requireit
 from pip._internal import main as pipmain
 # pipit is just a way to run pip
 pipit = lambda theargs: pipmain(theargs.split(" "))
