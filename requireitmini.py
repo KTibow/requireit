@@ -6,7 +6,7 @@ class InstallError(Exception):0
 D=__name__=='__main__';E="Couldn't auto-install ";F='install'
 def requireit(B):
 	for C in B:
-		J=C if isinstance(C, str)else C[0]
+		J=C if isinstance(C,str)else C[0]
 		try:from importlib import import_module as il
 		except ImportError:raise VersionError('Please upgrade Python')
 		try:
@@ -14,7 +14,7 @@ def requireit(B):
 			else:__main__.__dict__[J]=il(J)
 		except ModuleNotFoundError:
 			try:
-				if isinstance(C, str):A([F,C])
+				if isinstance(C,str):A([F,C])
 				else:A([F,C[1]])
 				if D:globals()[J]=il(J)
 				else:__main__.__dict__[J]=il(J)
