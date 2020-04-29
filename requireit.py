@@ -1,4 +1,4 @@
-#https://github.com/KTibow/requireit
+# https://github.com/KTibow/requireit
 from pip._internal import main as pip
 import __main__
 class VersionError(Exception):
