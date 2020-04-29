@@ -1,6 +1,6 @@
 exec(open("requireitmini-inline.py", "r").read())
-assert onedrivesdk not in globals()
-assert test0408 not in globals()
+assert "onedrivesdk" not in globals()
+assert "test0408" not in globals()
 requireit([["onedrivesdk", "git+https://github.com/OneDrive/onedrive-sdk-python.git"], "test0408"])
 assert isinstance(onedrivesdk, object)
 assert isinstance(test0408, object)
