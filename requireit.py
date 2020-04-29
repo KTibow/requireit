@@ -21,7 +21,7 @@ def requireit(libs):
         if isinstance(lib, str):
           __main__.__dict__[lib] = importlib.import_module(lib)
         else:
-          __main__.__dict__[0] = importlib.import_module(lib[0])
+          __main__.__dict__[lib[0]] = importlib.import_module(lib[0])
     except ModuleNotFoundError:
       try:
         if isinstance(lib, str):
@@ -37,7 +37,7 @@ def requireit(libs):
           if isinstance(lib, str):
             __main__.__dict__[lib] = importlib.import_module(lib)
           else:
-            __main__.__dict__[0] = importlib.import_module(lib[0])
+            __main__.__dict__[lib[0]] = importlib.import_module(lib[0])
       except Exception:
         if isinstance(lib, str):
           raise InstallError("Couldn't auto-install " + lib)
