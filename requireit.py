@@ -1,45 +1,37 @@
-# https://github.com/KTibow/requireit
+# This is requireit. It auto installs things you're missing before you import them. https://github.com/KTibow/requireit
 from pip._internal import main as pip
 import __main__
 class VersionError(Exception):
-  pass
+    pass
 class InstallError(Exception):
-  pass
+    pass
+isMain = __name__ == '__main__'
+installErrorMessage = "Couldn't auto-install "
+pipCommand = 'install'
 def requireit(libs):
-  for lib in libs:
-    try:
-      import importlib
-    except ImportError:
-      raise VersionError('Please upgrade Python')
-    try:
-      if __name__ == '__main__':
-        if isinstance(lib, str):
-          globals()[lib] = importlib.import_module(lib)
+    for lib in libs:
+        if isinstance(lib,str):
+            libName = lib
         else:
-          globals()[lib[0]] = importlib.import_module(lib[0])
-      else:
-        if isinstance(lib, str):
-          __main__.__dict__[lib] = importlib.import_module(lib)
-        else:
-          __main__.__dict__[lib[0]] = importlib.import_module(lib[0])
-    except ModuleNotFoundError:
-      try:
-        if isinstance(lib, str):
-          n(['install', lib])
-        else:
-          n(['install', lib[1])
-        if __name__ == '__main__':
-          if isinstance(lib, str):
-            globals()[lib] = importlib.import_module(lib)
-          else:
-            globals()[lib[0]] = importlib.import_module(lib[0])
-        else:
-          if isinstance(lib, str):
-            __main__.__dict__[lib] = importlib.import_module(lib)
-          else:
-            __main__.__dict__[lib[0]] = importlib.import_module(lib[0])
-      except Exception:
-        if isinstance(lib, str):
-          raise InstallError("Couldn't auto-install " + lib)
-        else:
-          raise InstallError("Couldn't auto-install " + lib[0])
+            libName = lib[0]
+        try:
+            from importlib import import_module
+        except ImportError:
+            raise VersionError('Please upgrade Python')
+        try:
+            if isMain:
+                globals()[libName] = import_module(libName)
+            else:
+                __main__.__dict__[libName] = import_module(libName)
+        except ModuleNotFoundError:
+            try:
+                if isinstance(lib, str):
+                    pip([pipCommand, lib])
+                else:
+                    pip([pipCommand, lib[1]])
+                if isMain:
+                    globals()[libName] = importModule(libName)
+                else:
+                    __main__.__dict__[libName] = importModule(libName)
+            except Exception:
+                raise InstallError(installErrorMessage + libName)
