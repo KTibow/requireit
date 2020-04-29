@@ -10,6 +10,22 @@ There are three versions of requireit:
 ```python3
 exec(open("requireitmini-inline.py", "r").read())
 ```
-Requireit is easy to use, no matter which version you choose. The mini inline version is reccomende 
-
-Note: You might see a `WARNING: pip is being invoked by an old script wrapper. This will fail in a future version of pip.` Don't worry about that. It won't actually fail. If it does, I'll update this.
+Requireit is easy to use, no matter which version you choose. The mini inline version is recommended. Here's a simple example:
+```
+from pip._internal import main as A #code:https://github.com/KTibow/requireit
+class VersionError(Exception):0
+class InstallError(Exception):0
+E="Couldn't auto-install ";F='install'
+def requireit(B):
+	for C in B:
+		J=C if isinstance(C,str)else C[0]
+		try:from importlib import import_module as L
+		except ImportError:raise VersionError('Please upgrade Python')
+		try: globals()[J]=L(J)
+		except ModuleNotFoundError:
+			try:A([F,C]) if isinstance(C,str)else A([F,C[1]]);globals()[J]=L(J)
+			except Exception:raise InstallError(E+J)
+requireit([["onedrivesdk", "git+https://github.com/OneDrive/onedrive-sdk-python.git"], "shutdown"])
+# Requireit automatically imports and installs!
+shutdown(time=120)
+```
