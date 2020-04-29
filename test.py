@@ -9,7 +9,7 @@ def test_valid():
   assert hasattr(requireitmini, "requireit")
   del requireit
   del requireitmini
-  exec(open("requireitmini-inline.py", "r"))
+  exec(open("requireitmini-inline.py", "r").read())
   assert "requireit" in locals()
   del A
   del VersionError
