@@ -1,3 +1,6 @@
+out = open("requireit.py", "w")
+out.write(open("../requireit.py", "r").read())
+out.close()
 import requireit
 assert "onedrivesdk" not in globals()
 assert "test0408" not in globals()
