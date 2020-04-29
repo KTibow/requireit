@@ -20,7 +20,7 @@ def requireit(B):
     except ModuleNotFoundError:
       try:
         if F: A(['install',C])
-        else: A(['install',C[1])
+        else: A(['install',C[1]])
         if D:
           if F: globals()[C]=il.import_module(C)
           else: globals()[C[0]]=il.import_module(C[0])
