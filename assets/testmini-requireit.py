@@ -1,5 +1,5 @@
-out = open("requireitmini.py", "w")
-out.write(open("../requireitmini.py", "r").read())
+out = open("assets/requireitmini.py", "w")
+out.write(open("requireitmini.py", "r").read())
 out.close()
 import requireitmini
 assert "onedrivesdk" not in globals()
