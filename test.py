@@ -5,8 +5,8 @@ def test_docstring():
 def test_valid():
   import requireit
   import requireitmini
-  assert hasattr(requireit, requireit)
-  assert hasattr(requireitmini, requireit)
+  assert hasattr(requireit, "requireit")
+  assert hasattr(requireitmini, "requireit")
   del requireit
   del requireitmini
   exec(open("requireitmini-inline.py", "r"))
