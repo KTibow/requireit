@@ -10,7 +10,7 @@ def requireit(B):
 		try:from importlib import import_module as il
 		except ImportError:raise VersionError('Please upgrade Python')
 		try:
-			globals()[J]=il(J) if D else __main__.__dict__[J]=il(J)
+			(globals()[J] if D else __main__.__dict__[J])=il(J)
 		except ModuleNotFoundError:
 			try:
 				A([F,C]) if isinstance(C,str)else A([F,C[1]]); globals()[J]=il(J) if D else __main__.__dict__[J]=il(J)
