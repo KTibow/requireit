@@ -1,19 +1,15 @@
+import pytest
 def test_docstring():
   import requireit
   assert len(requireit.requireit.__doc__) > 0
   del requireit
-def test_valid():
+def test_full_requireit():
   import requireit
-  import requireitmini
-  assert hasattr(requireit, "requireit")
-  assert hasattr(requireitmini, "requireit")
-  del requireit
-  del requireitmini
-  exec(open("requireitmini-inline.py", "r").read())
-  assert "requireit" in locals()
-  del A
-  del VersionError
-  del InstallError
-  del E
-  del F
-  del requireit
+  assert isinstance(requireit.requireit, object)
+  with pytest.raises(ModuleNotFoundError):
+    import onedrivesdk
+  with pytest.raises(ModuleNotFoundError):
+    import randomtestpackage
+  requireit.requireit([["onedrivesdk", "git+https://github.com/OneDrive/onedrive-sdk-python.git"], "randomtestpackage"])
+  assert isinstance(onedrivesdk, object)
+  assert isinstance(randomtestpackage, object)
