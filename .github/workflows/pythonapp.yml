@@ -28,6 +28,6 @@ jobs:
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E1,E225,E226,E227,E228,E9,F63,F7,F82,F402,F404,F405,F406,F407,F501,F502,F503,F504,F505,F506,F507,F508,F509,F521,F522,F523,F524,F525,F541,F601,F602,F621,F622,F631,F632,F633,F634,F701,F702,F703,F704,F705,F706,F707,F721,F722,F723,F811,F812,F821,F822,F823,F831,F841,F901,E999,C901 --show-source --statistics
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
