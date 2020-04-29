@@ -1,0 +1,33 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: flake8 python lint
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Lint with flake8
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E1,E225,E226,E227,E228,E9,F63,F7,F82,F402,F404,F405,F406,F407,F501,F502,F503,F504,F505,F506,F507,F508,F509,F521,F522,F523,F524,F525,F541,F601,F602,F621,F622,F631,F632,F633,F634,F701,F702,F703,F704,F705,F706,F707,F721,F722,F723,F811,F812,F821,F822,F823,F831,F841,F901,E999,C901 --show-source --statistics
+        # The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
