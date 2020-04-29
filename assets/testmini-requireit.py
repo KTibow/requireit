@@ -1,3 +1,6 @@
+out = open("requireitmini.py", "w")
+out.write(open("../requireitmini.py", "r").read())
+out.close()
 import requireitmini
 assert "onedrivesdk" not in globals()
 assert "test0408" not in globals()
