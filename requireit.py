@@ -33,8 +33,8 @@ def requireit(libs):
                 else:
                     pip([pipCommand, lib[1]])
                 if isMain:
-                    globals()[libName] = importModule(libName)
+                    globals()[libName] = import_module(libName)
                 else:
-                    __main__.__dict__[libName] = importModule(libName)
+                    __main__.__dict__[libName] = import_module(libName)
             except Exception:
                 raise InstallError(installErrorMessage + libName)
