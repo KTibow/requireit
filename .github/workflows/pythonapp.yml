@@ -28,7 +28,7 @@ jobs:
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --exclude=testfull-requireit.py,testmini-requireit.py,testminiinline-requireit.py
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --exclude=assets/*
         # The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --exclude=test.py
 
@@ -45,7 +45,7 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Test full version
-      run: python3 testfull-requireit.py
+      run: python3 assets/testfull-requireit.py
       
   mini-test:
     runs-on: ubuntu-latest
@@ -60,7 +60,7 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Test mini version
-      run: python3 testmini-requireit.py
+      run: python3 assets/testmini-requireit.py
   inline-test:
     runs-on: ubuntu-latest
     steps:
@@ -74,4 +74,4 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Test mini inline version
-      run: python3 testminiinline-requireit.py
+      run: python3 assets/testminiinline-requireit.py
