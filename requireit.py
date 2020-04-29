@@ -9,6 +9,9 @@ isMain = __name__ == '__main__'
 installErrorMessage = "Couldn't auto-install "
 pipCommand = 'install'
 def requireit(libs):
+    """Pass a list of libraries to requireit.
+    If something needs a different source, then use a sublist.
+    Example: ["frompip", "importedtoo", ["fromgithub", "git+https://github.com/fromgithub.git"]]"""
     for lib in libs:
         if isinstance(lib,str):
             libName = lib
