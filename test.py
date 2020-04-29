@@ -9,7 +9,7 @@ def test_full_requireit():
   with pytest.raises(ModuleNotFoundError):
     import onedrivesdk
   with pytest.raises(ModuleNotFoundError):
-    import randomtestpackage
+    import test0408
   requireit.requireit([["onedrivesdk", "git+https://github.com/OneDrive/onedrive-sdk-python.git"], "test0408"])
   assert isinstance(onedrivesdk, object)
-  assert isinstance(randomtestpackage, object)
+  assert isinstance(test0408, object)
