@@ -1,5 +1,5 @@
 # requireit
-Requireit makes sure you have all of your libraries. It streamlines user experience by automatically installing libraries the user doesn't have, and then importing. It has all of the features of pip, and you can dynamically import because it takes a list of strings as what to import.
+Requireit makes sure you have all of your libraries. It streamlines user experience by automatically installing libraries the user doesn't have, and then importing. It has all of the features of pip, and you can dynamically import because it takes a list of strings as what to import.  
 ![flake8 python lint](https://github.com/KTibow/requireit/workflows/flake8%20python%20lint/badge.svg)  
 ![requireit logo](pyart.png)  
 ## Quick start:
