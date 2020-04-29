@@ -1,5 +1,5 @@
-out = open("requireit.py", "w")
-out.write(open("../requireit.py", "r").read())
+out = open("assets/requireit.py", "w")
+out.write(open("requireit.py", "r").read())
 out.close()
 import requireit
 assert "onedrivesdk" not in globals()
