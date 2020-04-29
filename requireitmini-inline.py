@@ -1,6 +1,4 @@
-# https://github.com/KTibow/requireit
-from pip._internal import main as A
-import __main__
+from pip._internal import main as A #code:https://github.com/KTibow/requireit
 class VersionError(Exception):0
 class InstallError(Exception):0
 E="Couldn't auto-install ";F='install'
