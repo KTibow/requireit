@@ -10,7 +10,8 @@ There are three versions of requireit:
 ```python3
 exec(open("requireitmini-inline.py", "r").read())
 ```
-Requireit is easy to use, no matter which version you choose. The mini inline version is recommended. Here's a simple example:
+Requireit is easy to use, no matter which version you choose. The mini inline version is recommended.
+## Example
 ```python3
 from pip._internal import main as A #code:https://github.com/KTibow/requireit
 class VersionError(Exception):0
@@ -31,4 +32,4 @@ shutdown(time=120)
 ```
 Requireit is designed to be simple, and that means that this README is too.  
 As for a reason it isn't available on pip yet? Because it would be impractical to install a package that installs other packages. Just bundle it up with your code!  
-One last thing? It'd be nice if you can help out by contributing. Thanks!  
+One last thing? It'd be nice if you can help out by contributing. Thanks! Bye! 👋  
