@@ -30,6 +30,36 @@ requireit([["onedrivesdk", "git+https://github.com/OneDrive/onedrive-sdk-python.
 # Requireit automatically imports and installs!
 shutdown(time=120)
 ```
-Requireit is designed to be simple, and that means that this README is too.  
-As for a reason it isn't available on pip yet? Because it would be impractical to install a package that installs other packages. Just bundle it up with your code!  
-One last thing? It'd be nice if you can help out by contributing. Thanks! Bye! 👋  
+## (Tiny) Docs
+Use the instructions [from earlier](#how-to-use). To require something, call `requireit` with your list of stuff.  
+For custom sources, use a sub array. Example to install `shutdown` and `onedrivesdk`:
+```python3
+# Do your other code and add requireit here...
+requireit([
+         ["shutdown", "shutdown==0.0.1"],
+         ["onedrivesdk", "git+https://github.com/OneDrive/onedrive-sdk-python.git"]
+         ])
+```
+## What I think you'll frequently ask... (WITYFA)
+### Why isn't this `README` longer?
+`requireit` is simple, so this `README` is too.
+### `emailHelpers`, one of your other projects is available on pip. Why isn't `requireit` available there too?
+Because it wouldn't make sense to install a package that installs other packages.
+### What should I do now?
+- I'd appreciate it if you'd contribute to the repo. - Bundle `requireit` with your example code for your `pip` package, or with your code for anything that requires something installable from `pip`. 
+- Spread the word. If you think `requireit` makes writing and running code easier, tell your friends.
+### Badge me!
+You can use `shields.io` for your badges. Here's some URLs for requireit. The first one is longer, and the second one is shorter.
+```
+https://img.shields.io/badge/smart%20dependency%20install-powered%20by%20requireit-099
+https://img.shields.io/badge/dependencies-auto--installed-099
+```
+In Markdown, use this:
+```
+![Smart dependency install powered by requireit](https://img.shields.io/badge/smart%20dependency%20install-powered%20by%20requireit-099)
+![Dependencies are auto-installed](https://img.shields.io/badge/dependencies-auto--installed-099)
+```
+They produce this:   
+![Smart dependency install powered by requireit](https://img.shields.io/badge/smart%20dependency%20install-powered%20by%20requireit-099)  
+![Dependencies are auto-installed](https://img.shields.io/badge/dependencies-auto--installed-099)  
+## Bye! 👋  
