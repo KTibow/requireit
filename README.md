@@ -2,6 +2,7 @@
 ![requireit logo](assets/requireit.png)  
 Ever tried to get people to run your great code only to find out that they don't have all of the required packages? Requireit streamlines user experience by automatically installing libraries you don't have. It's as easy as pasting in less than 12 lines at the top of your code.  
 ![Lint and test](https://github.com/KTibow/requireit/workflows/Lint%20and%20test/badge.svg)  
+![Needs Python 3.6 or greater](https://img.shields.io/badge/python-3.6%20or%20greater-informational?style=flat)  
 ## How to use
 There are three versions of requireit:
 1. The [full version](requireit.py?raw=true). It has docstrings and works if you paste it at the top of your code or if you include it.
@@ -62,4 +63,12 @@ In Markdown, use this:
 They produce this:   
 ![Smart dependency install powered by requireit](https://img.shields.io/badge/smart%20dependency%20install-powered%20by%20requireit-099)  
 ![Dependencies are auto-installed](https://img.shields.io/badge/dependencies-auto--installed-099)  
+### Aah! It says:
+```
+WARNING: pip is being invoked by an old script wrapper. This will fail in a future version of pip.
+```
+Don't worry about this, basically it's complaining that I'm using a hacky method. If you're really cautious, put up this notice:
+```
+If there's an error near the start of the code, try instead manually installing the dependencies and removing anything about `requireit`. You can [let them know about it here](https://github.com/KTibow/requireit/issues/new/choose).
+```
 ## Bye! 👋  
