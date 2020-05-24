@@ -54,15 +54,18 @@ You can use `shields.io` for your badges. Here's some URLs for requireit. The fi
 ```
 https://img.shields.io/badge/smart%20dependency%20install-powered%20by%20requireit-099
 https://img.shields.io/badge/dependencies-auto--installed-099
+https://img.shields.io/badge/dependencies%20auto--installed-by%20requireit-099
 ```
 In Markdown, use this:
 ```
-![Smart dependency install powered by requireit](https://img.shields.io/badge/smart%20dependency%20install-powered%20by%20requireit-099)
-![Dependencies are auto-installed](https://img.shields.io/badge/dependencies-auto--installed-099)
+[![Smart dependency install powered by requireit](https://img.shields.io/badge/smart%20dependency%20install-powered%20by%20requireit-099)](https://github.com/KTibow/requireit/)  
+[![Dependencies are auto-installed](https://img.shields.io/badge/dependencies-auto--installed-099)](https://github.com/KTibow/requireit/)  
+[![Dependencies are auto-installed by requireit](https://img.shields.io/badge/dependencies%20auto--installed-by%20requireit-099)](https://github.com/KTibow/requireit/)  
 ```
 They produce this:   
-![Smart dependency install powered by requireit](https://img.shields.io/badge/smart%20dependency%20install-powered%20by%20requireit-099)  
-![Dependencies are auto-installed](https://img.shields.io/badge/dependencies-auto--installed-099)  
+[![Smart dependency install powered by requireit](https://img.shields.io/badge/smart%20dependency%20install-powered%20by%20requireit-099)](https://github.com/KTibow/requireit/)  
+[![Dependencies are auto-installed](https://img.shields.io/badge/dependencies-auto--installed-099)](https://github.com/KTibow/requireit/)  
+[![Dependencies are auto-installed by requireit](https://img.shields.io/badge/dependencies%20auto--installed-by%20requireit-099)](https://github.com/KTibow/requireit/)  
 ### Aah! It says:
 ```
 WARNING: pip is being invoked by an old script wrapper. This will fail in a future version of pip.
