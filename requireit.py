@@ -1,6 +1,7 @@
 # This is requireit. It auto installs things you're missing before you import them. https://github.com/KTibow/requireit
 from pip._internal import main as pip
 import __main__
+import sys
 class VersionError(Exception):
     pass
 class InstallError(Exception):
@@ -26,7 +27,7 @@ def requireit(libs):
                 globals()[libName] = import_module(libName)
             else:
                 __main__.__dict__[libName] = import_module(libName)
-        except ModuleNotFoundError:
+        except ModuleNotFoundError if sys.version_info.minor > 5 else ImportError:
             try:
                 if isinstance(lib, str):
                     pip([pipCommand, lib])
