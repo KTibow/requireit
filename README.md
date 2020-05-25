@@ -13,7 +13,7 @@ exec(open("requireitmini-inline.py", "r").read())
 Requireit is easy to use, no matter which version you choose. The mini inline version is recommended.
 ## Example
 ```python3
-from pip._internal import main as A #code:https://github.com/KTibow/requireit
+from pip._internal import main as A;import sys # This is requireit: https://github.com/KTibow/requireit
 class VersionError(Exception):0
 class InstallError(Exception):0
 E="Couldn't auto-install ";F='install'
@@ -23,7 +23,7 @@ def requireit(B):
 		try:from importlib import import_module as L
 		except ImportError:raise VersionError('Please upgrade Python')
 		try: globals()[J]=L(J)
-		except ModuleNotFoundError:
+		except ModuleNotFoundError if sys.version_info.minor > 5 else ImportError:
 			try:A([F,C]) if isinstance(C,str)else A([F,C[1]]);globals()[J]=L(J)
 			except Exception:raise InstallError(E+J)
 requireit([["onedrivesdk", "git+https://github.com/OneDrive/onedrive-sdk-python.git"], "shutdown"])
@@ -73,4 +73,29 @@ Don't worry about this, basically it's complaining that I'm using a hacky method
 ```
 If there's an error near the start of the code, try instead manually installing the dependencies and removing anything about `requireit`. You can [let them know about it here](https://github.com/KTibow/requireit/issues/new/choose).
 ```
+### My lint fails when I use `requireit`!
+Requireit uses something I (unoficially) like to call "dynamic variable assignment". Let's look at the source:
+```python3
+try:
+    if isMain:
+	    globals()[libName] = import_module(libName)
+    else:
+	    __main__.__dict__[libName] = import_module(libName)
+```
+This is **very** hacky, but it is still real Python code. Basically, we found out if we were included inline or imported seperately from this:
+```python3
+isMain = __name__ == '__main__'
+```
+We get the module as a variable from `importlib`'s `import_module`. Then if we are main, we set the module globally to that name. Otherwise, we import `__main__`, and access its `__dict__`.  
+The thing is, **your lint wasn't built for dynamic variable assignment**. To fix this, and be safe, do something like this:
+```python3
+shutdown, onedrivesdk = [0] * 2
+# Requireit stuff here
+# Require them
+if shutdown == 0 or onedrivesdk == 0:
+    print("Error with requireit. Try changing all of this to:")
+    print("import shutdown, onedrivesdk")
+    exit()
+```
+That should make your lint happy!
 ## Bye! 👋  
