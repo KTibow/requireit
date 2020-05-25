@@ -2,7 +2,6 @@
 ![requireit logo](assets/requireit.png)  
 Ever tried to get people to run your great code only to find out that they don't have all of the required packages? Requireit streamlines user experience by automatically installing libraries you don't have. It's as easy as pasting in 13 lines at the top of your code.  
 ![Lint and test](https://github.com/KTibow/requireit/workflows/Lint%20and%20test/badge.svg)  
-![Needs Python 3.6 or greater](https://img.shields.io/badge/python-3.6%20or%20greater-informational?style=flat)  
 ## How to use
 There are three versions of requireit:
 1. The [full version](requireit.py?raw=true). It has docstrings and works if you paste it at the top of your code or if you include it.
