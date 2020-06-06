@@ -40,10 +40,48 @@ requireit([
          ["onedrivesdk", "git+https://github.com/OneDrive/onedrive-sdk-python.git"]
          ])
 ```
+## requireIt Helper
+The normal version of requireit requires (haha!) you to convert your `import`s to `requireit`s. I've written a simple script (non-production-ready) that uses [import hooks](https://google.com/search?q=import+hooks) to help you during development. Sometimes it doesn't understand that the code importing understands if it fails, so sometimes it's okay to say `n`, but here it is:
+```python3
+import sys
+from importlib.abc import MetaPathFinder
+from importlib.util import spec_from_file_location, find_spec
+
+class RequireItHelper(MetaPathFinder):
+    def find_spec(self, fullname, path, target=None):
+        try:
+            del sys.meta_path[0]
+            res = find_spec(fullname)
+            sys.meta_path.insert(0, self)
+            if res is not None:
+                return res
+        except Exception as e:
+            return None
+        del sys.meta_path[0]
+        from pip._internal import main as pipmain
+        sys.meta_path.insert(0, self)
+        shouldinstall = input("=== Should I try to install "+fullname+" with pip because I couldn't import it? (Check your spelling first) y/n: ")
+        if shouldinstall.lower()[0] == "y":
+            pmn(["install", input("What is this package called on pip? ")])
+            print("Done, I'll try again...")
+            try:
+                del sys.meta_path[0]
+                res = sys.meta_path[1].find_spec(fullname)
+                sys.meta_path.insert(0, self)
+                if res is not None:
+                    return res
+            except Exception as e:
+                res = None
+            if res == None:
+                print("Error importing due to this exception:")
+		print(e)
+		print("Try manually running pip install "+fullname+".")
+            return res
+        return None
+sys.meta_path.insert(0, RequireItHelper())
+```
 ## What I think you'll frequently ask... (WITYFA)
-### Why isn't this `README` longer?
-`requireit` is simple, so this `README` is too.
-### `emailHelpers`, one of your other projects is available on pip. Why isn't `requireit` available there too?
+### [`emailHelpers`](https://pypi.org/project/emailHelpers/), one of your other projects is available on pip. Why isn't `requireit` available there too?
 Because it wouldn't make sense to install a package that installs other packages.
 ### What should I do now?
 - I'd appreciate it if you'd contribute to the repo. - Bundle `requireit` with your example code for your `pip` package, or with your code for anything that requires something installable from `pip`. 
