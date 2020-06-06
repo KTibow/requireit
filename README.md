@@ -113,10 +113,12 @@ That should make your lint happy!
   
 ### It's hard to switch to `requireit`.
 Well, I've designed the `requireIt Helper` for that purpose. It's **only for development**, but it can make things easier.  
-It uses [Import Hooks](https://www.google.com/search?q=import+hooks) to intercept when you import a package. Anyway, here it is:  
+It uses [Import Hooks](https://www.google.com/search?q=import+hooks) to intercept when you import a package.  
+If you import something, and it asks you if you want to install something other than the original thing you imported, say no.  
+Anyway, here it is:  
 ```python3
 # requireIt Helper (dev only) https://ktibow.github.io/requireit/#requireit-helper
-import sys, dis # Import sys for importing; sys and dis for detecting exception catching
+import sys # Import sys for importing
 from importlib.abc import MetaPathFinder # Subclassing
 from importlib.util import find_spec # Other imports
 importing = False
@@ -140,17 +142,17 @@ class RequireItHelper(MetaPathFinder):
         except Exception as e: # If exception, return
             importing = False
             return None
-        print("=== requireithelper getting ready to confirm pip install ===")
-        if "._" in fullname or (importing and importingName != fullname):
+        if "._" in fullname or (importing and importingName != fullname) or fullname in list(sys.modules.keys()):
             importing = False
             return None # Attempt to find internals and not nother asking for install.
-        try:
-            del sys.meta_path[0] # Remove myself
-            from pip._internal import main as pipmain # Import pip
-        finally:
-            sys.meta_path.insert(0, self) # Add myself
         shouldinstall = input("=== Should I try to install "+fullname+" with pip because I couldn't import it? (Beware of typosquatting) y/n: ") # Confirm
         if shouldinstall.lower()[0] == "y":
+	    print("Loading pip...")
+            try:
+                del sys.meta_path[0] # Remove myself
+                from pip._internal import main as pipmain # Import pip
+            finally:
+                sys.meta_path.insert(0, self) # Add myself
             pipmain(["install", input("What is this package called on pip? ")]) # Run pip to install
             print("Done, I'll try again...")
             try:
