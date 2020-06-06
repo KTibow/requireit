@@ -1,6 +1,7 @@
 # requireit
 [![requireit logo](assets/requireit.png)](#)  
-Ever tried to get people to run your great code only to find out that they don't have all of the required packages? Requireit streamlines user experience by automatically installing libraries you don't have. It's as easy as pasting in 13 lines at the top of your code.  
+Requireit is smart on-run package install for your Python code. Basically you add 13 lines of code to the top of your code, switch out `import bla` for `requireit(['bla'])`, and missing packages get installed on run with `pip`.  
+  
 ![Lint and test](https://github.com/KTibow/requireit/workflows/Lint%20and%20test/badge.svg)  
 ## How to use
 There are three versions of requireit:
@@ -150,7 +151,7 @@ class RequireItHelper(MetaPathFinder):
             from pip._internal import main as pipmain # Import pip
         finally:
             sys.meta_path.insert(0, self) # Add myself
-        shouldinstall = input("=== Should I try to install "+fullname+" with pip because I couldn't import it? (Check your spelling first) y/n: ") # Confirm
+        shouldinstall = input("=== Should I try to install "+fullname+" with pip because I couldn't import it? (Beware of typosquatting) y/n: ") # Confirm
         if shouldinstall.lower()[0] == "y":
             pipmain(["install", input("What is this package called on pip? ")]) # Run pip to install
             print("Done, I'll try again...")
