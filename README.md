@@ -10,6 +10,7 @@ There are three versions of requireit:
 ```python3
 exec(open("requireitmini-inline.py", "r").read())
 ```
+  
 Requireit is easy to use, no matter which version you choose. The mini inline version is recommended.
 ## Example
 ```python3
@@ -41,28 +42,52 @@ requireit([
          ])
 ```
 ## requireIt Helper
-The normal version of requireit requires (haha!) you to convert your `import`s to `requireit`s. I've written a simple script (non-production-ready) that uses [import hooks](https://google.com/search?q=import+hooks) to help you during development. Sometimes it doesn't understand that the code importing understands if it fails, so sometimes it's okay to say `n`, but here it is:
+The normal version of requireit requires (haha!) you to convert your `import`s to `requireit`s. I've written a simple script (non-production-ready) that uses [import hooks](https://google.com/search?q=import+hooks) to help you during development.  
+It's a little odd with try/except. It tries to detect if it will be caught, and if it will, it won't prompt you for install if it couldn't find the package. This might not work though, so remove the lines that say `==== IMPORTANT ====` to disable it.  
+Anyway, here's the `Helper`:  
 ```python3
-import sys
-from importlib.abc import MetaPathFinder
-from importlib.util import spec_from_file_location, find_spec
+# requireIt Helper (dev only) https://ktibow.github.io/requireit/#requireit-helper
+import sys, dis # Import sys for importing; sys and dis for detecting exception catching
+from importlib.abc import MetaPathFinder # Subclassing
+from importlib.util import find_spec # Other imports
 
 class RequireItHelper(MetaPathFinder):
-    def find_spec(self, fullname, path, target=None):
+    def find_spec(self, fullname, path, target=None): # Import hook for finding
         try:
-            del sys.meta_path[0]
-            res = find_spec(fullname)
-            sys.meta_path.insert(0, self)
-            if res is not None:
+            del sys.meta_path[0] # Remove myself
+            res = find_spec(fullname) # Try importing
+            sys.meta_path.insert(0, self) # Add myself
+            if res is not None: # If found, return
                 return res
-        except Exception as e:
+        except Exception as e: # If exception, return
             return None
-        del sys.meta_path[0]
-        from pip._internal import main as pipmain
-        sys.meta_path.insert(0, self)
-        shouldinstall = input("=== Should I try to install "+fullname+" with pip because I couldn't import it? (Check your spelling first) y/n: ")
+	def are_we_being_caught(): # Catch catching
+	    frame = sys._getframe(1)
+	    while frame:
+		bytecode = dis.Bytecode(frame.f_code)
+		except_stack = 0
+		for instr in bytecode:
+		    if instr.opname == "SETUP_EXCEPT":  # Going into a try: except: block
+			except_stack += 1
+		    elif instr.opname == "POP_EXCEPT":  # Exiting a try: except: block
+			except_stack -= 1
+		    if instr.offset > frame.f_lasti:  # Past the current instruction, bail out
+			break
+		if except_stack:  # If we breaked in the middle of a SETUP/POP pair
+		    return True
+		frame = frame.f_back
+	    return False
+	print("**requireithelper getting ready to confirm pip install**", end="")
+	if are_we_being_caught(): # ==== IMPORTANT ==== If you use try/except in your own code, this will cause ImportErrors. Remove to ask for installation no matter what.
+	    return None # ==== IMPORTANT ==== Remove this line too for that behavior. Remember this is only for development.
+	if "._" in fullname:
+	    return None # Attempt to find internals and not nother asking for install.
+        del sys.meta_path[0] # Remove myself
+        from pip._internal import main as pipmain # Import pip
+        sys.meta_path.insert(0, self) # Add myself
+        shouldinstall = input("=== Should I try to install "+fullname+" with pip because I couldn't import it? (Check your spelling first) y/n: ") # Confirm
         if shouldinstall.lower()[0] == "y":
-            pmn(["install", input("What is this package called on pip? ")])
+            pipmain(["install", input("What is this package called on pip? ")]) # Run pip to install
             print("Done, I'll try again...")
             try:
                 del sys.meta_path[0]
@@ -78,7 +103,7 @@ class RequireItHelper(MetaPathFinder):
 		print("Try manually running pip install "+fullname+".")
             return res
         return None
-sys.meta_path.insert(0, RequireItHelper())
+sys.meta_path.insert(0, RequireItHelper()) # Install requireIt Helper
 ```
 ## What I think you'll frequently ask... (WITYFA)
 ### [`emailHelpers`](https://pypi.org/project/emailHelpers/), one of your other projects is available on pip. Why isn't `requireit` available there too?
