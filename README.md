@@ -1,5 +1,5 @@
 # requireit
-![requireit logo](assets/requireit.png)  
+[![requireit logo](assets/requireit.png)](#)  
 Ever tried to get people to run your great code only to find out that they don't have all of the required packages? Requireit streamlines user experience by automatically installing libraries you don't have. It's as easy as pasting in 13 lines at the top of your code.  
 ![Lint and test](https://github.com/KTibow/requireit/workflows/Lint%20and%20test/badge.svg)  
 ## How to use
@@ -41,102 +41,51 @@ requireit([
          ["onedrivesdk", "git+https://github.com/OneDrive/onedrive-sdk-python.git"]
          ])
 ```
-## requireIt Helper
-The normal version of requireit requires (haha!) you to convert your `import`s to `requireit`s. I've written a simple script (non-production-ready) that uses [import hooks](https://google.com/search?q=import+hooks) to help you during development.  
-It's a little odd with try/except. It tries to detect if it will be caught, and if it will, it won't prompt you for install if it couldn't find the package. This might not work though, so remove the lines that say `==== IMPORTANT ====` to disable it.  
-Anyway, here's the `Helper`:  
-```python3
-# requireIt Helper (dev only) https://ktibow.github.io/requireit/#requireit-helper
-import sys, dis # Import sys for importing; sys and dis for detecting exception catching
-from importlib.abc import MetaPathFinder # Subclassing
-from importlib.util import find_spec # Other imports
-
-class RequireItHelper(MetaPathFinder):
-    def find_spec(self, fullname, path, target=None): # Import hook for finding
-        try:
-            del sys.meta_path[0] # Remove myself
-            res = find_spec(fullname) # Try importing
-            sys.meta_path.insert(0, self) # Add myself
-            if res is not None: # If found, return
-                return res
-        except Exception as e: # If exception, return
-            return None
-	def are_we_being_caught(): # Catch catching
-	    frame = sys._getframe(1)
-	    while frame:
-		bytecode = dis.Bytecode(frame.f_code)
-		except_stack = 0
-		for instr in bytecode:
-		    if instr.opname == "SETUP_EXCEPT":  # Going into a try: except: block
-			except_stack += 1
-		    elif instr.opname == "POP_EXCEPT":  # Exiting a try: except: block
-			except_stack -= 1
-		    if instr.offset > frame.f_lasti:  # Past the current instruction, bail out
-			break
-		if except_stack:  # If we breaked in the middle of a SETUP/POP pair
-		    return True
-		frame = frame.f_back
-	    return False
-	print("**requireithelper getting ready to confirm pip install**", end="")
-	if are_we_being_caught(): # ==== IMPORTANT ==== If you use try/except in your own code, this will cause ImportErrors. Remove to ask for installation no matter what.
-	    return None # ==== IMPORTANT ==== Remove this line too for that behavior. Remember this is only for development.
-	if "._" in fullname:
-	    return None # Attempt to find internals and not nother asking for install.
-        del sys.meta_path[0] # Remove myself
-        from pip._internal import main as pipmain # Import pip
-        sys.meta_path.insert(0, self) # Add myself
-        shouldinstall = input("=== Should I try to install "+fullname+" with pip because I couldn't import it? (Check your spelling first) y/n: ") # Confirm
-        if shouldinstall.lower()[0] == "y":
-            pipmain(["install", input("What is this package called on pip? ")]) # Run pip to install
-            print("Done, I'll try again...")
-            try:
-                del sys.meta_path[0]
-                res = sys.meta_path[1].find_spec(fullname)
-                sys.meta_path.insert(0, self)
-                if res is not None:
-                    return res
-            except Exception as e:
-                res = None
-            if res == None:
-                print("Error importing due to this exception:")
-		print(e)
-		print("Try manually running pip install "+fullname+".")
-            return res
-        return None
-sys.meta_path.insert(0, RequireItHelper()) # Install requireIt Helper
-```
 ## What I think you'll frequently ask... (WITYFA)
-### [`emailHelpers`](https://pypi.org/project/emailHelpers/), one of your other projects is available on pip. Why isn't `requireit` available there too?
+### `emailHelpers`, one of your other projects is available on pip. Why isn't `requireit` available there too?
 Because it wouldn't make sense to install a package that installs other packages.
 ### What should I do now?
-- I'd appreciate it if you'd contribute to the repo. - Bundle `requireit` with your example code for your `pip` package, or with your code for anything that requires something installable from `pip`. 
+- I'd appreciate it if you'd contribute to the repo, by letting me know about bugs in issues, by making pull requests that make things better, or just the simple act of [![Saying Thanks!](https://img.shields.io/badge/Saying%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/kidscodingplace@gmail.com)
+- Bundle `requireit` with your example code for your `pip` package, or with your code for anything that requires something installable from `pip`. 
 - Spread the word. If you think `requireit` makes writing and running code easier, tell your friends.
 ### Badge me!
 You can use `shields.io` for your badges. Here's some URLs for requireit. The first one is longer, and the second one is shorter.
+  
+<details><summary>Click to show details</summary>
+  
 ```
 https://img.shields.io/badge/smart%20dependency%20install-powered%20by%20requireit-099
 https://img.shields.io/badge/dependencies-auto--installed-099
 https://img.shields.io/badge/dependencies%20auto--installed-by%20requireit-099
 ```
+</details>
 In Markdown, use this:
+  
+<details><summary>Click to show details</summary>
+  
 ```
 [![Smart dependency install powered by requireit](https://img.shields.io/badge/smart%20dependency%20install-powered%20by%20requireit-099)](https://github.com/KTibow/requireit/)  
 [![Dependencies are auto-installed](https://img.shields.io/badge/dependencies-auto--installed-099)](https://github.com/KTibow/requireit/)  
 [![Dependencies are auto-installed by requireit](https://img.shields.io/badge/dependencies%20auto--installed-by%20requireit-099)](https://github.com/KTibow/requireit/)  
 ```
+</details>
 They produce this:   
+  
 [![Smart dependency install powered by requireit](https://img.shields.io/badge/smart%20dependency%20install-powered%20by%20requireit-099)](https://github.com/KTibow/requireit/)  
 [![Dependencies are auto-installed](https://img.shields.io/badge/dependencies-auto--installed-099)](https://github.com/KTibow/requireit/)  
 [![Dependencies are auto-installed by requireit](https://img.shields.io/badge/dependencies%20auto--installed-by%20requireit-099)](https://github.com/KTibow/requireit/)  
+  
 ### Aah! It says:
 ```
 WARNING: pip is being invoked by an old script wrapper. This will fail in a future version of pip.
 ```
-Don't worry about this, basically it's complaining that I'm using a hacky method. If you're really cautious, put up this notice:
+Don't worry about this, basically it's complaining that I'm using a hacky method. If you're really cautious, put up this notice in your README:
 ```
-If there's an error near the start of the code, try instead manually installing the dependencies and removing anything about `requireit`. You can [let them know about it here](https://github.com/KTibow/requireit/issues/new/choose).
+If there's an error near the start of the code, try instead manually installing the dependencies and removing anything about `requireit`. You can [let the developer of requireit know about it here](https://github.com/KTibow/requireit/issues/new/choose).
 ```
 ### My lint fails when I use `requireit`!
+  
+<details><summary>Click to expand explanation and fix</summary>
 Requireit uses something I (unoficially) like to call "dynamic variable assignment". Let's look at the source:
 ```python3
 try:
@@ -161,4 +110,76 @@ if shutdown == 0 or onedrivesdk == 0:
     exit()
 ```
 That should make your lint happy!
+</details>
+  
+### It's hard to switch to `requireit`.
+Well, I've designed the `requireIt Helper` for that purpose. It's **only for development**, but it can make things easier.  
+It uses [Import Hooks](https://www.google.com/search?q=import+hooks) to intercept when you import a package. Anyway, here it is:  
+<details><summary>Click to show requireIt Helper</summary>
+```python3
+# requireIt Helper (dev only) https://ktibow.github.io/requireit/#requireit-helper
+import sys, dis # Import sys for importing; sys and dis for detecting exception catching
+from importlib.abc import MetaPathFinder # Subclassing
+from importlib.util import find_spec # Other imports
+importing = False
+importingName = ""
+class RequireItHelper(MetaPathFinder):
+    def find_spec(self, fullname, path, target=None): # Import hook for finding
+        global importing
+        global importingName
+        if not importing:
+            importing = True
+            importingName = fullname
+        try:
+            try:
+                del sys.meta_path[0] # Remove myself
+                res = find_spec(fullname) # Try importing
+            finally:
+                sys.meta_path.insert(0, self) # Add myself
+            if res is not None: # If found, return
+                importing = False
+                return res
+        except Exception as e: # If exception, return
+            importing = False
+            return None
+        print("=== requireithelper getting ready to confirm pip install ===")
+        if "._" in fullname or (importing and importingName != fullname):
+            importing = False
+            return None # Attempt to find internals and not nother asking for install.
+        try:
+            del sys.meta_path[0] # Remove myself
+            from pip._internal import main as pipmain # Import pip
+        finally:
+            sys.meta_path.insert(0, self) # Add myself
+        shouldinstall = input("=== Should I try to install "+fullname+" with pip because I couldn't import it? (Check your spelling first) y/n: ") # Confirm
+        if shouldinstall.lower()[0] == "y":
+            pipmain(["install", input("What is this package called on pip? ")]) # Run pip to install
+            print("Done, I'll try again...")
+            try:
+                try:
+                    del sys.meta_path[0]
+                    res = find_spec(fullname)
+                finally:
+                    sys.meta_path.insert(0, self)
+                if res is not None:
+                    importing = False
+                    print("Successful import!")
+                    return res
+            except Exception as e:
+                res = None
+                print("Error importing due to this exception:")
+                print(e)
+                print("Try manually running pip install "+fullname+".")
+                importing = False
+                return None
+            if res == None:
+                print("Error importing. Try manually importing or manually running pip install "+fullname+".")
+            importing = False
+            return res
+        importing = False
+        return None
+sys.meta_path.insert(0, RequireItHelper()) # Install requireIt Helper
+```
+</details>
+  
 ## Bye! 👋  
