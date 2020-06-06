@@ -51,7 +51,7 @@ Because it wouldn't make sense to install a package that installs other packages
 ### Badge me!
 You can use `shields.io` for your badges. Here's some URLs for requireit. The first one is longer, and the second one is shorter.
   
-<details><summary>Click to show details</summary>
+  - <details><summary>Click to show details</summary>
   
 ```
 https://img.shields.io/badge/smart%20dependency%20install-powered%20by%20requireit-099
@@ -61,7 +61,7 @@ https://img.shields.io/badge/dependencies%20auto--installed-by%20requireit-099
 </details>
 In Markdown, use this:
   
-<details><summary>Click to show details</summary>
+  - <details><summary>Click to show details</summary>
   
 ```
 [![Smart dependency install powered by requireit](https://img.shields.io/badge/smart%20dependency%20install-powered%20by%20requireit-099)](https://github.com/KTibow/requireit/)  
@@ -71,15 +71,15 @@ In Markdown, use this:
 </details>
 They produce this:   
   
-[![Smart dependency install powered by requireit](https://img.shields.io/badge/smart%20dependency%20install-powered%20by%20requireit-099)](https://github.com/KTibow/requireit/)  
-[![Dependencies are auto-installed](https://img.shields.io/badge/dependencies-auto--installed-099)](https://github.com/KTibow/requireit/)  
-[![Dependencies are auto-installed by requireit](https://img.shields.io/badge/dependencies%20auto--installed-by%20requireit-099)](https://github.com/KTibow/requireit/)  
+  - [![Smart dependency install powered by requireit](https://img.shields.io/badge/smart%20dependency%20install-powered%20by%20requireit-099)](https://github.com/KTibow/requireit/)  
+  - [![Dependencies are auto-installed](https://img.shields.io/badge/dependencies-auto--installed-099)](https://github.com/KTibow/requireit/)  
+  - [![Dependencies are auto-installed by requireit](https://img.shields.io/badge/dependencies%20auto--installed-by%20requireit-099)](https://github.com/KTibow/requireit/)  
   
 ### Aah! It says:
 ```
 WARNING: pip is being invoked by an old script wrapper. This will fail in a future version of pip.
 ```
-Don't worry about this, basically it's complaining that I'm using a hacky method. If you're really cautious, put up this notice in your README:
+Don't worry about this, basically it's complaining that I'm directly talking to `pip` instead of using the command line, and it knows that. If you're really cautious, put up this notice in your README:
 ```
 If there's an error near the start of the code, try instead manually installing the dependencies and removing anything about `requireit`. You can [let the developer of requireit know about it here](https://github.com/KTibow/requireit/issues/new/choose).
 ```
@@ -115,7 +115,6 @@ That should make your lint happy!
 ### It's hard to switch to `requireit`.
 Well, I've designed the `requireIt Helper` for that purpose. It's **only for development**, but it can make things easier.  
 It uses [Import Hooks](https://www.google.com/search?q=import+hooks) to intercept when you import a package. Anyway, here it is:  
-<details><summary>Click to show requireIt Helper</summary>
 ```python3
 # requireIt Helper (dev only) https://ktibow.github.io/requireit/#requireit-helper
 import sys, dis # Import sys for importing; sys and dis for detecting exception catching
@@ -180,6 +179,5 @@ class RequireItHelper(MetaPathFinder):
         return None
 sys.meta_path.insert(0, RequireItHelper()) # Install requireIt Helper
 ```
-</details>
   
 ## Bye! 👋  
