@@ -37,10 +37,8 @@ Use the instructions [from earlier](#how-to-use). To require something, call `re
 For custom sources, use a sub array. Example to install `shutdown` and `onedrivesdk`:
 ```python3
 # Do your other code and add requireit here...
-requireit([
-         ["shutdown", "shutdown==0.0.1"],
-         ["onedrivesdk", "git+https://github.com/OneDrive/onedrive-sdk-python.git"]
-         ])
+requireit([["shutdown", "shutdown==0.0.1"],
+           ["onedrivesdk", "git+https://github.com/OneDrive/onedrive-sdk-python.git"]])
 ```
 ## What I think you'll frequently ask... (WITYFA)
 ### `emailHelpers`, one of your other projects is available on pip. Why isn't `requireit` available there too?
@@ -52,8 +50,8 @@ Because it wouldn't make sense to install a package that installs other packages
 ### Badge me!
 You can use `shields.io` for your badges. Here's some URLs for requireit. The first one is longer, and the second one is shorter.
   
-  - <details><summary>Click to show details</summary>
-  
+<details><summary>Click to show badge URLs</summary>
+
 ```
 https://img.shields.io/badge/smart%20dependency%20install-powered%20by%20requireit-099
 https://img.shields.io/badge/dependencies-auto--installed-099
@@ -62,8 +60,8 @@ https://img.shields.io/badge/dependencies%20auto--installed-by%20requireit-099
 </details>
 In Markdown, use this:
   
-  - <details><summary>Click to show details</summary>
-  
+<details><summary>Click to show Markdown</summary>
+
 ```
 [![Smart dependency install powered by requireit](https://img.shields.io/badge/smart%20dependency%20install-powered%20by%20requireit-099)](https://github.com/KTibow/requireit/)  
 [![Dependencies are auto-installed](https://img.shields.io/badge/dependencies-auto--installed-099)](https://github.com/KTibow/requireit/)  
