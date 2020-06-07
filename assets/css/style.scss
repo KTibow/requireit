@@ -24,3 +24,20 @@
 .project-name {
   display: none;
 }
+.project-tagline {
+  margin: 2rem;
+  font-weight: normal;
+  opacity: 0.8;
+
+  @include large {
+    font-size: 1.875rem;
+  }
+
+  @include medium {
+    font-size: 1.725rem;
+  }
+
+  @include small {
+    font-size: 1.5rem;
+  }
+}
