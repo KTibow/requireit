@@ -1,4 +1,3 @@
-# requireit
 [![requireit logo](assets/requireit.png)](#)  
 Requireit is smart on-run package install for your Python code. Basically you add 13 lines of code to the top of your code, switch out `import bla` for `requireit(['bla'])`, and missing packages get installed on run with `pip`.  
   
@@ -47,6 +46,7 @@ Because it wouldn't make sense to install a package that installs other packages
 - I'd appreciate it if you'd contribute to the repo, by letting me know about bugs in issues, by making pull requests that make things better, or just the simple act of [![Saying Thanks!](https://img.shields.io/badge/Saying%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/kidscodingplace@gmail.com)
 - Bundle `requireit` with your example code for your `pip` package, or with your code for anything that requires something installable from `pip`. 
 - Spread the word. If you think `requireit` makes writing and running code easier, tell your friends.
+  
 ### Badge me!
 You can use `shields.io` for your badges. Here's some URLs for requireit. The first one is longer, and the second one is shorter.
   
