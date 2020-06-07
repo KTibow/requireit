@@ -1,4 +1,4 @@
-[![requireit logo](assets/requireit.png)](#)  
+<a href="#" class="readmelogo"><img alt="requireit logo" src="https://github.com/KTibow/requireit/raw/master/assets/requireit.png" /></a>  
 Requireit is smart on-run package install for your Python code. Basically you add 13 lines of code to the top of your code, switch out `import bla` for `requireit(['bla'])`, and missing packages get installed on run with `pip`.  
   
 ![Lint and test](https://github.com/KTibow/requireit/workflows/Lint%20and%20test/badge.svg)  
