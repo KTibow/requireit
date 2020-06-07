@@ -22,18 +22,5 @@
   }
 }
 .project-name {
-  margin-top: 0;
-  margin-bottom: 0.1rem;
-
-  @include large {
-    font-size: 1.625rem;
-  }
-
-  @include medium {
-    font-size: 1.125rem;
-  }
-
-  @include small {
-    font-size: 0.825rem;
-  }
+  display: none;
 }
