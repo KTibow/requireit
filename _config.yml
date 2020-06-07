@@ -1,1 +1,4 @@
 theme: jekyll-theme-cayman
+title: requireit
+description: Smart on-run package install for your Python code.
+google_analytics: UA-165004437-1
