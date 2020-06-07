@@ -45,3 +45,16 @@
 * {
   text-align: center;
 }
+@media all and (orientation: portrait) {
+  .requireitlogo {
+    width: 100%;
+  }
+}
+@media all and (orientation: landscape) {
+  .requireitlogo {
+    width: 30%;
+  }
+}
+.readmelogo {
+  display: none;
+}
