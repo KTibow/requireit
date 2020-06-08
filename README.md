@@ -31,6 +31,12 @@ requireit([["onedrivesdk", "git+https://github.com/OneDrive/onedrive-sdk-python.
 # Requireit automatically imports and installs!
 shutdown(time=120)
 ```
+~~~python3
+print("testing")
+~~~
+{%highlight python3%}
+print("testing")
+{%endhighlight%}
 ## (Tiny) Docs
 Use the instructions [from earlier](#how-to-use). To require something, call `requireit` with your list of stuff.  
 For custom sources, use a sub array. Example to install `shutdown` and `onedrivesdk`:
