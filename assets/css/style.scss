@@ -24,7 +24,7 @@
 header > * {
   border-bottom: none !important;
 }
-footer > * {
+footer, footer > *, footer > * > * {
   text-align: center;
 }
 .readmelogo {
