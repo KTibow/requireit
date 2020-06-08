@@ -38,6 +38,8 @@
   @include small {
     font-size: 1.5rem;
   }
+}
+header > * {
   border-bottom: none;
 }
 footer > * {
