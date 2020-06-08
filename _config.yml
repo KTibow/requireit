@@ -2,12 +2,8 @@ theme: jekyll-theme-cayman
 title: requireit
 description: Smart on-run package install for your Python code.
 google_analytics: UA-165004437-1
-# Conversion
-markdown:    kramdown
+markdown: kramdown
 highlighter: rouge
-
-# Markdown Processors
 kramdown:
   input: GFM
-  auto_ids: true
-  syntax_highlighter: rouge
+  hard_wrap: false
