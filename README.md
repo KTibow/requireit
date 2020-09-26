@@ -80,7 +80,7 @@ They produce this:
 ```
 WARNING: pip is being invoked by an old script wrapper. This will fail in a future version of pip.
 ```
-Upgrade requireit, this is fixed.
+Looks like it's time for an upgrade! Report an issue if this still happens, even after upgrading.
 ### My lint fails when I use `requireit`!
   
 <details><summary>Click to expand explanation and fix</summary>
