@@ -14,26 +14,28 @@ exec(open("requireitmini-inline.py", "r").read())
 Requireit is easy to use, no matter which version you choose. The mini inline version is recommended.
 ## Example
 ```python3
-from pip._internal import main as A;import sys # This is requireit: https://github.com/KTibow/requireit
+from subprocess import check_output as A;import sys#git.io/JUVEE
 class VersionError(Exception):0
 class InstallError(Exception):0
-E="Couldn't auto-install ";F='install'
+E="Couldn't auto-install ";F=[sys.executable,"-m","pip","install"]
 def requireit(B):
 	for C in B:
 		J=C if isinstance(C,str)else C[0]
 		try:from importlib import import_module as L
-		except ImportError:raise VersionError('Please upgrade Python')
+		except ImportError:raise VersionError("⬆🐍")
 		try: globals()[J]=L(J)
 		except ModuleNotFoundError if sys.version_info.minor > 5 else ImportError:
-			try:A([F,C]) if isinstance(C,str)else A([F,C[1]]);globals()[J]=L(J)
+			try:A(F+[C]) if isinstance(C,str)else A(F+[C[1]]);globals()[J]=L(J)
 			except Exception:raise InstallError(E+J)
+
 requireit([["onedrivesdk", "git+https://github.com/OneDrive/onedrive-sdk-python.git"], "shutdown"])
 # Requireit automatically imports and installs!
 shutdown(time=120)
 ```
 ## (Tiny) Docs
 Use the instructions [from earlier](#how-to-use). To require something, call `requireit` with your list of stuff.  
-For custom sources, use a sub array. Example to install `shutdown` and `onedrivesdk`:
+For custom sources, use a sub array. The first item is the name of the library, and the second is the pip command.  
+Example to install `shutdown` and `onedrivesdk`:
 ```python3
 # Do your other code and add requireit here...
 requireit([["shutdown", "shutdown==0.0.1"],
@@ -43,7 +45,7 @@ requireit([["shutdown", "shutdown==0.0.1"],
 ### `emailHelpers`, one of your other projects is available on pip. Why isn't `requireit` available there too?
 Because it wouldn't make sense to install a package that installs other packages.
 ### What should I do now?
-- I'd appreciate it if you'd contribute to the repo, by letting me know about bugs in issues, by making pull requests that make things better, or just the simple act of [![Saying Thanks!](https://img.shields.io/badge/Saying%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/kidscodingplace@gmail.com)
+- I'd appreciate it if you'd contribute to the repo, by letting me know about bugs in issues, by making pull requests that make things better, or just the simple act of [![Saying Thanks!](https://img.shields.io/badge/Saying%20Thanks-!-1EAEDB.svg)](https://saythanks.io/to/kendell.r@outlook.com)
 - Bundle `requireit` with your example code for your `pip` package, or with your code for anything that requires something installable from `pip`. 
 - Spread the word. If you think `requireit` makes writing and running code easier, tell your friends.
   
@@ -78,10 +80,7 @@ They produce this:
 ```
 WARNING: pip is being invoked by an old script wrapper. This will fail in a future version of pip.
 ```
-Don't worry about this, basically it's complaining that I'm directly talking to `pip` instead of using the command line, and it knows that. If you're really cautious, put up this notice in your README:
-```
-If there's an error near the start of the code, try instead manually installing the dependencies and removing anything about `requireit`. You can [let the developer of requireit know about it here](https://github.com/KTibow/requireit/issues/new/choose).
-```
+Upgrade requireit, this is fixed.
 ### My lint fails when I use `requireit`!
   
 <details><summary>Click to expand explanation and fix</summary>
@@ -100,13 +99,14 @@ isMain = __name__ == '__main__'
 We get the module as a variable from `importlib`'s `import_module`. Then if we are main, we set the module globally to that name. Otherwise, we import `__main__`, and access its `__dict__`.  
 The thing is, **your lint wasn't built for dynamic variable assignment**. To fix this, and be safe, do something like this:
 ```python3
-shutdown, onedrivesdk = [0] * 2
+shutdown, onedrivesdk = [None] * 2
 # Requireit stuff here
 # Require them
-if shutdown == 0 or onedrivesdk == 0:
+if shutdown is None or onedrivesdk is None:
     print("Error with requireit. Try changing all of this to:")
     print("import shutdown, onedrivesdk")
     exit()
+# Your code here
 ```
 That should make your lint happy!
 </details>
@@ -150,10 +150,10 @@ class RequireItHelper(MetaPathFinder):
 	    print("Loading pip...")
             try:
                 del sys.meta_path[0] # Remove myself
-                from pip._internal import main as pipmain # Import pip
+                from subprocess import check_output as pip # Import pip
             finally:
                 sys.meta_path.insert(0, self) # Add myself
-            pipmain(["install", input("What is this package called on pip? ")]) # Run pip to install
+            pipmain([sys.executable, "-m", "pip", "install", input("What is this package called on pip? ")]) # Run pip to install
             print("Done, I'll try again...")
             try:
                 try:
@@ -169,11 +169,11 @@ class RequireItHelper(MetaPathFinder):
                 res = None
                 print("Error importing due to this exception:")
                 print(e)
-                print("Try manually running pip install "+fullname+".")
+                print("Try manually running pip install " + fullname + ".")
                 importing = False
                 return None
             if res == None:
-                print("Error importing. Try manually importing or manually running pip install "+fullname+".")
+                print("Error importing. Try manually importing or manually running pip install " + fullname + ".")
             importing = False
             return res
         importing = False
