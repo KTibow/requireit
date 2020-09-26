@@ -6,7 +6,7 @@ def requireit(B):
 	for C in B:
 		J=C if isinstance(C,str)else C[0]
 		try:from importlib import import_module as Z
-		except ImportError:raise VersionError("Please upgrade Python")
+		except ImportError:raise VersionError("⬆🐍")
 		try:
 			if D:globals()[J]=Z(J)
 			else:__main__.__dict__[J]=Z(J)
