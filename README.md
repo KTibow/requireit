@@ -118,13 +118,16 @@ If you import something, and it asks you if you want to install something other 
 Anyway, here it is:  
 ```python3
 # requireIt Helper (dev only) https://ktibow.github.io/requireit/#requireit-helper
-import sys # Import sys for importing
-from importlib.abc import MetaPathFinder # Subclassing
-from importlib.util import find_spec # Other imports
+import sys  # Import sys for importing
+from importlib.abc import MetaPathFinder  # Subclassing
+from importlib.util import find_spec  # Other imports
+
 importing = False
 importingName = ""
+
+
 class RequireItHelper(MetaPathFinder):
-    def find_spec(self, fullname, path, target=None): # Import hook for finding
+    def find_spec(self, fullname, path, target=None):  # Import hook for finding
         global importing
         global importingName
         if not importing:
@@ -132,28 +135,44 @@ class RequireItHelper(MetaPathFinder):
             importingName = fullname
         try:
             try:
-                del sys.meta_path[0] # Remove myself
-                res = find_spec(fullname) # Try importing
+                del sys.meta_path[0]  # Remove myself
+                res = find_spec(fullname)  # Try importing
             finally:
-                sys.meta_path.insert(0, self) # Add myself
-            if res is not None: # If found, return
+                sys.meta_path.insert(0, self)  # Add myself
+            if res is not None:  # If found, return
                 importing = False
                 return res
-        except Exception as e: # If exception, return
+        except Exception as e:  # If exception, return
             importing = False
             return None
-        if "._" in fullname or (importing and importingName != fullname) or fullname in list(sys.modules.keys()):
+        if (
+            "._" in fullname
+            or (importing and importingName != fullname)
+            or fullname in list(sys.modules.keys())
+        ):
             importing = False
-            return None # Attempt to find internals and not nother asking for install.
-        shouldinstall = input("=== Should I try to install "+fullname+" with pip because I couldn't import it? (Beware of typosquatting) y/n: ") # Confirm
+            return None  # Attempt to find internals and not bother asking for install.
+        shouldinstall = input(
+            "=== Should I try to install "
+            + fullname
+            + " with pip because I couldn't import it? (Beware of typosquatting) y/n: "
+        )  # Confirm
         if shouldinstall.lower()[0] == "y":
-	    print("Loading pip...")
+            print("Loading pip...")
             try:
-                del sys.meta_path[0] # Remove myself
-                from subprocess import check_output as pip # Import pip
+                del sys.meta_path[0]  # Remove myself
+                from subprocess import check_output as pip  # Import pip
             finally:
-                sys.meta_path.insert(0, self) # Add myself
-            pipmain([sys.executable, "-m", "pip", "install", input("What is this package called on pip? ")]) # Run pip to install
+                sys.meta_path.insert(0, self)  # Add myself
+            pipmain(
+                [
+                    sys.executable,
+                    "-m",
+                    "pip",
+                    "install",
+                    input("What is this package called on pip? "),
+                ]
+            )  # Run pip to install
             print("Done, I'll try again...")
             try:
                 try:
@@ -173,12 +192,19 @@ class RequireItHelper(MetaPathFinder):
                 importing = False
                 return None
             if res == None:
-                print("Error importing. Try manually importing or manually running pip install " + fullname + ".")
+                print(
+                    "Error importing. Try manually importing or manually running pip install "
+                    + fullname
+                    + "."
+                )
             importing = False
             return res
         importing = False
         return None
-sys.meta_path.insert(0, RequireItHelper()) # Install requireIt Helper
+
+
+sys.meta_path.insert(0, RequireItHelper())  # Install requireIt Helper
+
 ```
   
 ## Bye! 👋  
