@@ -164,7 +164,7 @@ class RequireItHelper(MetaPathFinder):
                 from subprocess import check_output as pip  # Import pip
             finally:
                 sys.meta_path.insert(0, self)  # Add myself
-            pipmain(
+            pip(
                 [
                     sys.executable,
                     "-m",
@@ -205,6 +205,11 @@ class RequireItHelper(MetaPathFinder):
 
 sys.meta_path.insert(0, RequireItHelper())  # Install requireIt Helper
 
+```
+In a REPL, wrap the whole thing in
+```
+exec("""
+""")
 ```
   
 ## Bye! 👋  
